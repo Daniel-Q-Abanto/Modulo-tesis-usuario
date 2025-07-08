@@ -39,12 +39,6 @@ class RegisterView(APIView):
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
-    def options(self, request, *args, **kwargs):
-        """
-        Esto permite responder correctamente a solicitudes preflight CORS (OPTIONS).
-        """
-        return Response(status=200)
-
     def post(self, request):
         correo = request.data.get('email')
         password = request.data.get('password')
@@ -52,13 +46,16 @@ class LoginView(APIView):
         try:
             user = get_user_model().objects.get(correo=correo)
             if user.check_password(password):
+                # Generar el token para el usuario
                 refresh = RefreshToken.for_user(user)
-                user_role = user.rol.rol  # Asegúrate de que existe esta relación
+
+                # Obtener el rol del usuario y devolverlo junto con el token
+                user_role = user.rol.rol  # Asegúrate de que el modelo de usuario tiene el rol
 
                 return Response({
                     'access': str(refresh.access_token),
                     'refresh': str(refresh),
-                    'role': user_role,
+                    'role': user_role,  # Devolver el rol del usuario
                 })
             else:
                 return Response({"detail": "Contraseña incorrecta"}, status=400)
