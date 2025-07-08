@@ -8,8 +8,10 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-!no^)p!81d8_ptx_op=y*5g^b80i(5ukq1k=pfkiftd3au7+h$'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+
+DEBUG = True  # Cambia a False en producción
+
+ALLOWED_HOSTS = ['*']  # Puedes personalizar con tu IP o dominio si quieres
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -25,7 +27,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # debe ir primero
+    'corsheaders.middleware.CorsMiddleware',  # DEBE IR PRIMERO
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,7 +57,36 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-AUTH_USER_MODEL = 'selta.Usuario'
+# ==== CORS CONFIGURACIÓN CORRECTA ====
+CORS_ALLOWED_ORIGINS = [
+    'http://seltaconfecciones.shop',
+    'http://www.seltaconfecciones.shop',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+# =========================
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -77,14 +108,7 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
 }
 
-# CORS Y CSRF (usa tu IP pública actual o dominio si ya lo tienes)
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    'http://35.175.222.58',
-]
-CSRF_TRUSTED_ORIGINS = [
-    'http://35.175.222.58',
-]
+AUTH_USER_MODEL = 'selta.Usuario'
 
 DATABASES = {
     'default': {
@@ -100,18 +124,10 @@ DATABASES = {
     }
 }
 
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
+STATIC_URL = 'static/'
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-
-STATIC_URL = 'static/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
