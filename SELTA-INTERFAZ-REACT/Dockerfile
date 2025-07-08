@@ -1,15 +1,8 @@
-# Etapa 1: construir la app
-FROM node:18 as build
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-RUN npm run build
-
-# Etapa 2: usar nginx para servir la build
+# Etapa única: usar nginx para servir la build ya preparada
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
 
+# Copia directamente tu carpeta build descomprimida
+COPY build /usr/share/nginx/html
+
+# Configura nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf

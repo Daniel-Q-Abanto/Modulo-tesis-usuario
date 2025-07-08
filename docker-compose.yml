@@ -16,7 +16,7 @@ services:
     build: ./SELTA-INTERFAZ-REACT
     container_name: usuario_frontend
     ports:
-      - "3001:80"
+      - "80:80"
     depends_on:
       - backend
     restart: always
