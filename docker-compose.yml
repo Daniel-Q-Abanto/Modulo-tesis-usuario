@@ -1,0 +1,22 @@
+
+
+services:
+  backend:
+    build: ./SELTA-INTERFAZ-DJANGO
+    container_name: usuario_backend
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./SELTA-INTERFAZ-DJANGO:/app
+    env_file:
+      - ./SELTA-INTERFAZ-DJANGO/.env
+    restart: always
+
+  frontend:
+    build: ./SELTA-INTERFAZ-REACT
+    container_name: usuario_frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    restart: always

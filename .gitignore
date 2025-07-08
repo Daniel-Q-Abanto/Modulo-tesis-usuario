@@ -1,0 +1,25 @@
+# Entornos virtuales
+env/
+venv/
+
+# Variables de entorno
+.env
+SELTA-INTERFAZ-DJANGO/.env    # 👈 AÑADE ESTA LÍNEA
+SELTA-INTERFAZ-REACT/.env     # 👈 Y ESTA TAMBIÉN
+
+# Archivos de configuración
+*.log
+*.tmp
+
+# Cache de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# React / Node
+node_modules/
+build/
